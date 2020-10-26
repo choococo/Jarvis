@@ -8,6 +8,10 @@ def sigmoid(x):
     return 1 / (1 + math.exp(-x))
 
 
+def mish(x):
+    return x * math.tanh(math.log(1 + math.exp(x)))
+
+
 if __name__ == '__main__':
     _x = [i / 100 for i in range(100)]
     _y = [4 * j + 3 for j in _x]
