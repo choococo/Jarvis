@@ -23,6 +23,8 @@ class CodeGenerator:
         self._width = width
         self._height = height
         self._save_path = save_path
+        if not os.path.exists(self._save_path):
+            os.makedirs(self._save_path)
         self._numbers = numbers
         self._font = font
         self._font_size = font_size
@@ -68,9 +70,21 @@ class CodeGenerator:
         :return: 两个坐标组合成的元组
         """
         x1 = random.randint(5, 20)
-        y1 = random.randint(5, 20)
-        x2 = random.randint(190, 230)
-        y2 = random.randint(190, 230)
+        y1 = random.randint(5, self._height)
+        x2 = random.randint(190, self._width)
+        y2 = random.randint(0, self._height)
+        xyxy = [x1, y1, x2, y2]
+        return xyxy
+
+    def _randExllipsexyxy(self):
+        """
+        生成随机的点坐标
+        :return: 椭圆形坐标，形式要和点一样
+        """
+        x1 = random.randint(0, self._width)
+        y1 = random.randint(0, self._height)
+        x2 = x1 + 5
+        y2 = y1 + 5
         xyxy = [x1, y1, x2, y2]
         return xyxy
 
@@ -88,6 +102,9 @@ class CodeGenerator:
         """
         return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
 
+    def _randExllipseColor(self):
+        return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
+
     def _imageAddRandLine(self, image, numbers=2):
         """
         给图片加入随机的干扰直线或者曲线
@@ -102,6 +119,8 @@ class CodeGenerator:
         for i in range(numbers):
             draw.line(xy=self._randLinexyxy(), fill=color1, width=2)
             draw.arc(xy=self._randLinexyxy(), start=self._randArcDegree(), end=self._randArcDegree(), fill=color2, width=1)
+        for i in range(numbers * 10):
+            draw.ellipse(xy=self._randExllipsexyxy(), fill=self._randExllipseColor(), width=2)
         return image
 
     def _img_new(self):
@@ -149,16 +168,23 @@ class CodeGenerator:
         :return: 添加好验证码的Image对象
         """
         draw = ImageDraw.Draw(image)
-        x_list = [0]
+        x_list = [10]
         for i in range(4):
-            # ???????????这里面还要加入字符的漂移，让两个字符重叠的情况不允许超过一半，要写判断放入字符
-            # 对xy坐标重新使用
-            # if x_list is None:
-            #     x_list.append(0)
-            x = 10 + np.random.randint(1/2 * x_list[i], 60)
-            x_list.append(x)
+            x = 10
+            if i == 0:
+                x = x_list[i]
+            else:
+                # x = np.random.randint(40 + 30 * i, 40 + 60 * i)
+                x = np.random.randint(40 + 60 * (i - 1), 130 + 60 * (i - 1))
+                if x + 60 > self._width:
+                    x = x - (x + 60 - 240)
+                x_list.append(x)
+            if (x - x_list[i-1]) / 2 < 30:
+                x = x + (30 - (x - x_list[i-1]) / 2)
             y = np.random.randint(0, self._height - self._font_size)
-            draw.text((x, y),self._randChar(),font=self._font,fill=self._randCodeColor())
+            if y + 40 > self._height:
+                y = y - (y + 40 - self._height)
+            draw.text((x, y), self._randChar(), font=self._font, fill=self._randCodeColor())
             # draw.text((60*i+10,10),self._randChar(),font=self._font,fill=self._randCodeColor())
         return image
 
@@ -185,10 +211,12 @@ class CodeGenerator:
 
 if __name__ == '__main__':
     save_path = r"./pic"                                                        # 保存路径
-    font_size = 40
+    # save_path = r"D:\Dataset\CaptchaCode02"                                     # 保存路径
+    font_size = 40                                                              # 字体大小
+    numbers = 10                                                                # 生成图片数量
     font = ImageFont.truetype(font="msyh.ttc", size=40)                         # 字体
     code_gen = CodeGenerator(save_path=save_path, numbers=None, font=font)      # 实例化
-    code_gen.generator(10)                                                      # 调用生成器
+    code_gen.generator(numbers=numbers)                                         # 调用生成器
 
 
 
