@@ -103,6 +103,10 @@ class CodeGenerator:
         return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
 
     def _randExllipseColor(self):
+        """
+        生成随机的椭圆形的点的颜色
+        :return: 颜色的字符串
+        """
         return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
 
     def _imageAddRandLine(self, image, numbers=2):
@@ -197,12 +201,12 @@ class CodeGenerator:
         for i in range(numbers):
             img = self._generateBg(choice=np.random.choice([1]))
             img = self._addCaptcher(image=img)
-            img = self._imageAddRandLine(img)
+            img = self._imageAddRandLine(img, numbers=2)
             # img = self._imageFilter(img)
             # img.show()
             # img.save(self._save_path + "{}.jpg".format((i + 1)))
             img.save(os.path.join(self._save_path, "{}.jpg".format((i + 1))))
-            sys.stdout.write("\r >>processing {}/{}".format((i + 1), numbers))
+            sys.stdout.write("\r >> processing {}/{}".format((i + 1), numbers))
             sys.stdout.flush()
         sys.stdout.write("\n")
         sys.stdout.flush()
@@ -210,10 +214,10 @@ class CodeGenerator:
 
 
 if __name__ == '__main__':
-    save_path = r"./pic"                                                        # 保存路径
-    # save_path = r"D:\Dataset\CaptchaCode02"                                     # 保存路径
+    # save_path = r"./pic"                                                        # 保存路径
+    save_path = r"D:\Dataset\Verification code"                                 # 保存路径
     font_size = 40                                                              # 字体大小
-    numbers = 10                                                                # 生成图片数量
+    numbers = 1000                                                              # 生成图片数量
     font = ImageFont.truetype(font="msyh.ttc", size=40)                         # 字体
     code_gen = CodeGenerator(save_path=save_path, numbers=None, font=font)      # 实例化
     code_gen.generator(numbers=numbers)                                         # 调用生成器
