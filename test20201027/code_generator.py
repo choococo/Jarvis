@@ -281,21 +281,22 @@ class CodeGenerator:
             # img = self._addCaptcher(image=img)                                # 这个可以不使用了
             img = self._imageAddRandLine(img, numbers=2)
             # img = self._imageFilter(img)
-            img.show()
-            # img.save(self._save_path + "{}.jpg".format((i + 1)))
-        #     img.save(os.path.join(self._save_path, "{}.jpg".format((i + 1))))
-        #     sys.stdout.write("\r >> processing {}/{}".format((i + 1), numbers))
-        #     sys.stdout.flush()
-        # sys.stdout.write("\n")
-        # sys.stdout.flush()
-        # sys.stdout.write("生成完成")
+            # img.show()
+            img.save(self._save_path + "{}.jpg".format((i + 1)))
+            img.save(os.path.join(self._save_path, "{}.jpg".format((i + 1))))
+            sys.stdout.write("\r >> processing {}/{}".format((i + 1), numbers))
+            sys.stdout.flush()
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+        sys.stdout.write("生成完成")
 
 
 if __name__ == '__main__':
-    save_path = r"./pic"                                                        # 保存路径
+    # save_path = r"./pic"                                                        # 保存路径
     # save_path = r"D:\Dataset\Verification code"                                 # 保存路径
+    save_path = r"D:\Dataset\Verification code02"                                 # 保存路径
     font_size = 40                                                              # 字体大小
-    numbers = 1                                                              # 生成图片数量
+    numbers = 1000                                                             # 生成图片数量
     font = ImageFont.truetype(font="msyh.ttc", size=40)                         # 字体
     code_gen = CodeGenerator(save_path=save_path, numbers=None, font=font)      # 实例化
     code_gen.generator(numbers=numbers)                                         # 调用生成器

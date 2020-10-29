@@ -13,7 +13,7 @@ def randBgColor():
             random.randint(32, 127))
 
 img_bg = Image.new("RGB", (240, 60))
-image = Image.new("RGB", (40, 40))
+image = Image.new("RGB", (60, 60))
 
 draw = ImageDraw.Draw(img_bg)
 # 手动填充像素
@@ -23,7 +23,7 @@ for i in range(240):
 
 # img_bg.show()
 
-font = ImageFont.truetype(font="msyh.ttc", size=30)
+font = ImageFont.truetype(font="msyh.ttc", size=40)
 draw2 = ImageDraw.Draw(image)
 for i in range(40):
     for j in range(40):
