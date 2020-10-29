@@ -44,84 +44,18 @@ class CodeGenerator:
         随机生成验证码颜色
         :return: 验证码的RGB颜色的元组
         """
-        return (random.randint(100, 255),
-                random.randint(100, 255),
-                random.randint(100, 255))
+        return (random.randint(65, 255),
+                random.randint(65, 255),
+                random.randint(65, 255))
 
-    def _randLineColor(self):
-        return (random.randint(65, 150),
-                random.randint(65, 150),
-                random.randint(65, 150))
-
-    def _randRote(self, image):
+    def _randRote(self, image, alpha=None):         # 但是这里目前没有用到，可能需要进行切片得到每一个，旋转后再paste回去
         """
         随机旋转图片
+        :param alpha: 旋转角度
         :param image: 需要旋转的图片
         :return: 旋转后的单个验证码
         """
-        return image.rotate(np.random.randint(-90, 90))
-
-    def _codeSingleGen(self):
-        """
-        单个字符生成+旋转+变形
-        :return:
-        """
-        image = Image.new("RGB", (40, 40))
-        font = ImageFont.truetype(font="msyh.ttc", size=30)
-        draw2 = ImageDraw.Draw(image)
-        for i in range(40):
-            for j in range(40):
-                draw2.point(xy=(i, j), fill=self._randBgColor())
-        draw2.text(xy=(8, 1), text=self._randChar(), font=font, fill=self._randCodeColor())
-        image = self._randRote(image)
-        return image
-
-    def _pixelReborn(self):
-        """
-        像素重生
-        :return:
-        """
-        image = self._codeSingleGen()
-        image = np.array(image)
-        # print(image[0][0])  # (40, 40, 3)
-        for i in range(image.shape[0]):
-            for j in range(image.shape[1]):
-                # print("--", image[i][j])
-                if image[i][j][0] == 0 and image[i][j][1] == 0 and image[i][j][2] == 0:
-                    image[i][j][0], image[i][j][1], image[i][j][2] = self._randBgColor()[0], self._randBgColor()[1], self._randBgColor()[2]
-        image = Image.fromarray(image)
-        # image.show()
-        return image
-
-    def _pasteCaptcherToBgOneByOne02(self, image_bg, numbers=4):
-        for i in range(numbers):
-            img_reborn = self._pixelReborn()
-            image_bg.paste(img_reborn, (10 + 60 * i, 10))
-        # image_bg.show()
-        return image_bg
-
-    def _pasteCaptcherToBgOneByOne(self, image_bg, numbers=4):
-        x_list = [10]
-        for i in range(numbers):
-            img_reborn = self._pixelReborn()
-            x = 10
-            if i == 0:
-                x = x_list[i]
-            else:
-                # x = np.random.randint(40 + 30 * i, 40 + 60 * i)
-                x = np.random.randint(40 + 60 * (i - 1), 130 + 60 * (i - 1))
-                if x + 60 > self._width:
-                    x = x - (x + 60 - 240)
-                x_list.append(x)
-            if (x - x_list[i - 1]) / 2 < 30:
-                x = x + (30 - (x - x_list[i - 1]) / 2)
-            y = np.random.randint(0, self._height - self._font_size)
-            if y + 40 > self._height:
-                y = y - (y + 40 - self._height)
-            # image_bg.paste(img_reborn, (10 + 60 * i, 10))
-            image_bg.paste(img_reborn, (int(x), int(y)))
-        # image_bg.show()
-        return image_bg
+        return image.roate(np.random.randint(0, 90))
 
     def _imageFilter(self, image):
         """
@@ -167,24 +101,14 @@ class CodeGenerator:
         随机选择干扰线中的填充颜色
         :return: 颜色的字符串str
         """
-        # return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
-        return self._randLineColor()
-    def _randColorExllipse(self):
-        """
-        随机选择干扰线中的填充颜色
-        :return: 颜色的字符串str
-        """
-        # return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
-        return self._randExllipseColor()
+        return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
 
     def _randExllipseColor(self):
         """
         生成随机的椭圆形的点的颜色
         :return: 颜色的字符串
         """
-        return (random.randint(65, 170),
-                random.randint(65, 170),
-                random.randint(65, 170))
+        return np.random.choice(["red", "blue", "yellow", "gray", "black", "white"])
 
     def _imageAddRandLine(self, image, numbers=2):
         """
@@ -199,9 +123,9 @@ class CodeGenerator:
 
         for i in range(numbers):
             draw.line(xy=self._randLinexyxy(), fill=color1, width=2)
-            draw.arc(xy=self._randLinexyxy(), start=self._randArcDegree(), end=self._randArcDegree(), fill=color2, width=2)
+            draw.arc(xy=self._randLinexyxy(), start=self._randArcDegree(), end=self._randArcDegree(), fill=color2, width=1)
         for i in range(numbers * 10):
-            draw.ellipse(xy=self._randExllipsexyxy(), fill=self._randExllipseColor(), width=1)
+            draw.ellipse(xy=self._randExllipsexyxy(), fill=self._randExllipseColor(), width=2)
         return image
 
     def _img_new(self):
@@ -223,6 +147,7 @@ class CodeGenerator:
         c = chr(random.randint(48, 57))
         return random.choice([a, b, c])
 
+
     def _generateBg(self, choice=0):
         """
         直接利用numpy生成均匀分布，然后转换成图片，即为背景
@@ -239,6 +164,8 @@ class CodeGenerator:
                 for j in range(self._height):
                     draw.point(xy=(i, j), fill=(self._randBgColor()))
             return image
+        elif choice == 3:
+            return Image.new("RGBA", size=(60, 240))
         else:
             raise Exception("没有其他创建背景的方式，请选择choice=0或者choice=1")
 
@@ -269,6 +196,16 @@ class CodeGenerator:
             # draw.text((60*i+10,10),self._randChar(),font=self._font,fill=self._randCodeColor())
         return image
 
+    def _addCaptcher02(self, image):
+        draw = ImageDraw.Draw(image)
+        x_list = [10]
+        for i in range(4):
+
+            draw.text((10 + 60*i, 10), self._randChar(), font=self._font, fill=self._randCodeColor())
+            # draw.text((60*i+10,10),self._randChar(),font=self._font,fill=self._randCodeColor())
+            # 切片取数字，旋转再粘贴
+        return image
+
     def generator(self, numbers=1):
         """
         验证码生成器，只要这一个方法对外开放
@@ -276,10 +213,10 @@ class CodeGenerator:
         :return: 按理说应该为空，只需要保存即可
         """
         for i in range(numbers):
-            img = self._generateBg(choice=np.random.choice([1]))
-            self._pasteCaptcherToBgOneByOne(image_bg=img)
-            # img = self._addCaptcher(image=img)                                # 这个可以不使用了
-            img = self._imageAddRandLine(img, numbers=2)
+            img = self._generateBg(choice=np.random.choice([3]))
+            img = self._addCaptcher02(image=img)
+            # img = self._addCaptcher(image=img)
+            # img = self._imageAddRandLine(img, numbers=2)
             # img = self._imageFilter(img)
             img.show()
             # img.save(self._save_path + "{}.jpg".format((i + 1)))
@@ -292,8 +229,8 @@ class CodeGenerator:
 
 
 if __name__ == '__main__':
-    save_path = r"./pic"                                                        # 保存路径
-    # save_path = r"D:\Dataset\Verification code"                                 # 保存路径
+    # save_path = r"./pic"                                                        # 保存路径
+    save_path = r"D:\Dataset\Verification code"                                 # 保存路径
     font_size = 40                                                              # 字体大小
     numbers = 1                                                              # 生成图片数量
     font = ImageFont.truetype(font="msyh.ttc", size=40)                         # 字体
