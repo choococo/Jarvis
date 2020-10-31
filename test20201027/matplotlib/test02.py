@@ -22,12 +22,12 @@ import numpy as np
 # plt.show()
 
 # '饼图'
-# plt.rcParams["font.sans-serif"]=["SimHei"]
-# labels = ["教育","医疗","餐饮","交通","房贷","车贷","其他"]
-# sizes = [10,7,5,5,60,8,5]
-# explode = (0,0,0,0,0.1,0,0)
-# plt.pie(sizes,explode,labels,autopct="%.2f%%",shadow=True,startangle=180)
-# plt.title("8月份家庭月支出饼图")
-# plt.show()
+plt.rcParams["font.sans-serif"] = ["SimHei"]
+labels = ["教育", "医疗", "餐饮", "交通", "房贷", "车贷", "其他"]
+sizes = [10, 7, 5, 5, 60, 8, 5]
+explode = (0, 0, 0, 0, 0.1, 0, 0)
+plt.pie(sizes, explode, labels, autopct="%.2f%%", shadow=True, startangle=180)
+plt.title("8月份家庭月支出饼图")
+plt.show()
 
 

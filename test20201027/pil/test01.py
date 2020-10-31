@@ -30,9 +30,9 @@ if __name__ == '__main__':
     # plt.show()              # 利用plt显示图片
 
     '图像转换numpy'
-    # a = np.array(img)       # 转换成numpy数组的形式
-    # print(a.shape)          # 查看array的形状，这里就是图片的原始whc的形状
-    # print(a.size)           # 计算的个数
+    a = np.array(img)       # 转换成numpy数组的形式
+    print(a.shape)          # 查看array的形状，这里就是图片的原始whc的形状
+    print(a.size)           # 计算的个数
 
     'numpy数组转换成图像'
     # image = Image.fromarray(a)  # 从数组中转换为Image对象
@@ -51,14 +51,14 @@ if __name__ == '__main__':
     # print(pixes)                    # 输出
 
     '使用切片的方法裁剪图片'
-    # print(np.array(img)[100:600, 500:1000, :])  # HWC 进行切片
-    # img2 = Image.fromarray(np.array(img)[100:600, 500:1000, :])
-    # # img2.show()
-    # plt.imshow(img2)
-    # # plt.xticks([])                # 隐藏x坐标轴
-    # # plt.yticks([])                # 隐藏y坐标轴
-    # plt.axis('off')                 # 隐藏坐标轴，与上面的用法是一样的
-    # plt.show()
+    print(np.array(img)[100:600, 500:1000, :])  # HWC 进行切片
+    img2 = Image.fromarray(np.array(img)[100:600, 500:1000, :])
+    # img2.show()
+    plt.imshow(img2)
+    # plt.xticks([])                # 隐藏x坐标轴
+    # plt.yticks([])                # 隐藏y坐标轴
+    plt.axis('off')                 # 隐藏坐标轴，与上面的用法是一样的
+    plt.show()
 
     '使用Image中裁剪工具裁剪图片'
     # img2 = img.crop((400, 500, 1000, 1000))
@@ -79,17 +79,17 @@ if __name__ == '__main__':
     # plt.show()
 
     '将一张图片按指定位置粘贴到另一张图片上'
-    img02 = Image.open("02.jpg")
-    img.paste(img02, (10, 10))
-    plt.imshow(img)
-    plt.axis('off')
-    plt.show()
+    # img02 = Image.open("02.jpg")
+    # img.paste(img02, (10, 10))
+    # plt.imshow(img)
+    # plt.axis('off')
+    # plt.show()
 
     '保存图片'
-    img.save("03.jpg")
+    # img.save("03.jpg")
 
     '生成一张空白图片'
-    image = Image.new("RGB", (100, 100), (0, 0, 0))
-    image.show()
+    # image = Image.new("RGB", (100, 100), (0, 0, 0))
+    # image.show()
 
 
