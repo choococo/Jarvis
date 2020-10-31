@@ -20,7 +20,7 @@ while cap.isOpened():
         break
     if cv2.waitKey(int(1000 // fps // 2)) & 0xFF == ord('q'):
         break
-    cv2.imshow("frame", frame)
+    cv2.imshow("中文".encode("gbk").decode(errors="ignore"), frame)
     # cv2.waitKey(0)
 cap.release()                                                       # 关闭视频
 cv2.destroyAllWindows()                                             # 关闭所有窗口
