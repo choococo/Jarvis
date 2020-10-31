@@ -49,6 +49,8 @@ if __name__ == '__main__':
     plt.ion()
     for epoch in range(1):
         for i, (xs, ys) in enumerate(train_loader):
+            print(xs)
+            exit(0)
             xs, ys = xs.cuda(), ys.long().cuda()
             output = net(xs)
 
