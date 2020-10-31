@@ -18,7 +18,7 @@ def read_txt_to_xyxy_word():
     # print(res_list)
 
     return res_list
-
+#
 # a = read_txt_to_xyxy_word()
 # print(a[0][0])
 # x1, y1, x2, y2  = a[0][0].split(" ")
@@ -35,12 +35,12 @@ def read_txt_to_xyxy_word():
 #     print(x1, y1, x2, y2, word)
 #     break
 
-# import pandas as pd
-# data = pd.read_table("xyxy.txt",sep=" ",header=None)
-# words = pd.read_table("word.txt",sep=" ",header=None)
-# x1,y1,x2,y2 = data.iloc[0,0:4]
-# word = words.iloc[0, 0]
-# # print(data)
+import pandas as pd
+data = pd.read_table("xyxy.txt",sep=" ",header=None)
+words = pd.read_table("word.txt",sep=" ",header=None)
+x1,y1,x2,y2 = data.iloc[0,0:4]
+word = words.iloc[0]
+# print(data)
 # print(words)
-# print(word)
-# # print(x1,y1,x2,y2)
+print(word)
+# print(x1,y1,x2,y2)

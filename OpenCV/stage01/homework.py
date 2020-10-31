@@ -5,7 +5,7 @@ from stage01 import readtxt
 
 data = readtxt.read_txt_to_xyxy_word()
 print(data[0][0])
-x1, y1, x2, y2  = data[0][0].split(" ")
+x1, y1, x2, y2 = data[0][0].split(" ")
 word = data[0][1]
 print(word)
 
