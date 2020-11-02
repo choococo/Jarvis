@@ -47,7 +47,6 @@ for i in range(image.shape[0]):
         # if image[i][j].any([255, 0, 0]):
             point[i+10][j+10] = np.array([255, 0,0])
 
-
 print(point)
 # print(point.shape)
 point_new = point
@@ -55,19 +54,6 @@ print(point_new[..., 0] == 255)
 mask = point_new[..., 0] == 255
 print("-----", point[mask].shape)
 # print(point_new)
-
-
-# point_by_color = image[]
-# mask = image[:, :] == [255, 0, 0]
-# idxs = np.where(image[:, :] == [255, 0, 0])
-# print(idxs[0].shape)
-# print(image[idxs].shape)
-# res= np.stack(idxs, axis=1)
-# print(res.shape)
-# print(res + np.array([10, 10, 0]))
-# for w, h, c in zip(idxs[0], idxs[1], idxs[2]):
-#     print([w, h, c])
-#     res.append([w, h, c])
 
 image = Image.fromarray(image)
 
