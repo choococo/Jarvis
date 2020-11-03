@@ -2,7 +2,9 @@ import cv2
 from PIL import Image, ImageFont
 
 
-cap = cv2.VideoCapture("http://ivi.bupt.edu.cn/hls/cctv1.m3u8")
+# cap = cv2.VideoCapture("http://ivi.bupt.edu.cn/hls/cctv1.m3u8")
+cap = cv2.VideoCapture("rtsp://admin:admin@192.168.3.160:554/1/1")
+
 width, height = cap.get(3), cap.get(4)
 print(width, height)
 while cap.isOpened():

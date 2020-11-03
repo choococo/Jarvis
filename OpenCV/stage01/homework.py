@@ -8,14 +8,9 @@ print(data[0][0])
 x1, y1, x2, y2 = data[0][0].split(" ")
 word = data[0][1]
 print(word)
+length = len(data)
+print(length)
 
-# data = pd.read_table("xyxy.txt",sep=" ",header=None)
-# x1,y1,x2,y2 = data.iloc[0,0:4]
-#
-# words = pd.read_table("word.txt",sep=" ",header=None)
-# word = words.iloc[0, 0]
-#
-#
 input_path = r"../images/1.mp4"
 output_path = r"../images/output.mp4"
 font = ImageFont.truetype("./msyh.ttc", size=30)
@@ -24,6 +19,9 @@ cap = cv2.VideoCapture(input_path)                      # 创建视频对象
 fourcc = cv2.VideoWriter_fourcc(*"DIVX")                # 写入视频常用的格式,为MP4格式
 fps = cap.get(cv2.CAP_PROP_FPS)                         # 获取当前视频的帧数
 frames = cap.get(7)
+num = int(frames/length)
+print(num)
+# exit(0)
 
 w, h = int(cap.get(3)), int(cap.get(4))                 # 读取视频的宽和高
 out = cv2.VideoWriter(output_path, fourcc, fps, (w, h)) # 创建视频写入格式，大小和帧数的对象
