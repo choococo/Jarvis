@@ -16,3 +16,7 @@ loss = 1 / 2 * (z - y) **2
 print(diff(loss, w, 1))
 print(diff(loss, b, 1))
 
+print(not 1 and 1)
+def fun():
+    pass
+print(fun())
