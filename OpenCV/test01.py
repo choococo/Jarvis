@@ -16,6 +16,9 @@ print(word)
 # word = words.iloc[0, 0]
 #
 #
+
+
+
 input_path = r"images/1.mp4"
 output_path = r"images/output.mp4"
 font = ImageFont.truetype("./msyh.ttc", size=30)
