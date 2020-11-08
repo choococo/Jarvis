@@ -8,3 +8,4 @@ gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)            # 转换为灰度图
 
 # 绘制灰度直方图
 hist_gray = cv2.calcHist()
+# test github   
