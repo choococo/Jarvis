@@ -2,6 +2,8 @@ import cv2
 import numpy
 
 '图像仿射变换'
+# 图像仿射变换，就是对图像进行平移、旋转、镜像、倾斜操作
+# 图像仿射变换的是：通过一个仿射变换矩阵对原始的图像，进行仿射变换
 img = cv2.imread("../images/6.jpg")
 rows, cols, channels = img.shape
 
@@ -24,13 +26,12 @@ M2 = numpy.float32([[0.8, 0, 0], [0, 0.5, 0]])  # x轴变为0.8倍，y轴变为0
 # 表示放大一倍后再做(上下 + 左右)
 # 翻转。
 # M30 = numpy.float32([[1, 0, 0], [0, 1, 0]])#
-M30 = numpy.float32([[numpy.sqrt(3)/2, 0.5, 0], [-0.5, numpy.sqrt(3)/2, 0]])#
+M30 = numpy.float32([[numpy.sqrt(3) / 2, 0.5, 0], [-0.5, numpy.sqrt(3) / 2, 0]])  #
 # M3 = cv2.getRotationMatrix2D(center=(0,0), angle=0, scale=0.5)
-# M3 = cv2.getRotationMatrix2D((cols//2, rows//2), 45, scale=0.8)  # angle=45表示逆时针旋转45度。scale=0.5表示缩小到原来的一半。
-M3 = cv2.getRotationMatrix2D((cols//2, rows//2), 45, scale=0.5)  # angle=45表示逆时针旋转45度。scale=0.5表示缩小到原来的一半。
+M3 = cv2.getRotationMatrix2D((cols // 2, rows // 2), 45, scale=0.8)  # angle=45表示逆时针旋转45度。scale=0.5表示缩小到原来的一半。
 # 4）倾斜
-M4 = numpy.float32([[1, 0.5, 0], [0, 1, 0]])# 沿x轴倾斜0.5倍
-M5 = numpy.float32([[1, 0, 0], [0.5, 1, 0]])# 沿y轴倾斜0.5倍
+M4 = numpy.float32([[1, 0.5, 0], [0, 1, 0]])  # 沿x轴倾斜0.5倍
+M5 = numpy.float32([[1, 0, 0], [0.5, 1, 0]])  # 沿y轴倾斜0.5倍
 # 5）翻转/镜像
 # M6 = numpy.float32([[-1, 0, cols], [0, 1, 0]])  # 绕y转翻转，沿x轴平移cols个像素单位
 M6 = numpy.float32([[1, 0, 0], [0, -1, rows]])  # 绕x转翻转，沿y轴平移rows个像素单位
@@ -49,18 +50,15 @@ dst5 = cv2.warpAffine(img, M5, dsize=(cols * 2, rows * 2))  # 倾斜
 dst6 = cv2.warpAffine(img, M6, dsize=(cols, rows))  # 翻转/镜像
 dst7 = cv2.warpAffine(img, M7, dsize=(cols, rows))  # 翻转/镜像
 
-
-
-
-# cv2.imshow("img pic", img)
+cv2.imshow("img pic", img)
 # cv2.imshow("dst1 pic", dst0)
 # cv2.imshow("dst1 pic", dst1)
 # cv2.imshow("dst2 pic", dst2)
 # cv2.imshow("dst3 pic", dst30)
-# cv2.imshow("dst3 pic", dst3)
+cv2.imshow("dst3 pic", dst3)
 # cv2.imshow("dst4 pic", dst4)
 # cv2.imshow("dst5 pic", dst5)
 # cv2.imshow("dst6 pic", dst6)
-cv2.imshow("dst7 pic", dst7)
+# cv2.imshow("dst7 pic", dst7)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
