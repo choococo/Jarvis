@@ -1,7 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 
-'直方图反向投影'
+'直方图反向投影——类似于进行分割，而且要求颜色一致才能分割的比较好'
 # 感兴趣区域
 roi = cv2.imread("../images/30.jpg")
 hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)

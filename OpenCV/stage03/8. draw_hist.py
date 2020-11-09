@@ -18,11 +18,11 @@ hist_G = cv2.calcHist([img], channels=[1], mask=None, histSize=[256], ranges=[0,
 hist_R = cv2.calcHist([img], channels=[2], mask=None, histSize=[256], ranges=[0, 255])
 # print(hist_G)
 
-# plt.plot(hist_gray, color="gray", label="Gray")
-# plt.plot(hist_B, color="b", label="B")
-# plt.plot(hist_G, color="g", label="G")
-# plt.plot(hist_R, color="r", label="R")
-# plt.show()
+plt.plot(hist_gray, color="gray", label="Gray")
+plt.plot(hist_B, color="b", label="B")
+plt.plot(hist_G, color="g", label="G")
+plt.plot(hist_R, color="r", label="R")
+plt.show()
 
 # 2)2D直方图
 img = cv2.imread("../images/1.jpg")
@@ -31,12 +31,12 @@ img = cv2.imread("../images/1.jpg")
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
 # 绘制2D直方图
-hist_hsv = cv2.calcHist([hsv], channels=[0, 1], mask=None, histSize=[180, 256], ranges=[0, 180, 0, 255])  # ????
+hist_hsv = cv2.calcHist([hsv], channels=[0, 2], mask=None, histSize=[180, 256], ranges=[0, 180, 0, 255])  # ????
 
 # plt.imshow(hsv)
 # # plt.plot("hist_hsv", hist_hsv)
 # plt.axis('off')
 # plt.show()
-cv2.imshow("hist_hsv", hist_hsv)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# cv2.imshow("hist_hsv", hist_hsv)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()

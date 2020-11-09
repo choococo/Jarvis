@@ -68,15 +68,17 @@ for i in range(len(w)):
 print(s)
 
 # 9.
-str = "Practice makes perfect"
+str = "Practice makes +perfect"
 print(str.capitalize())
 strs = str.split(" ")
 print(strs[0].capitalize())
 res = []
 for i in range(len(strs)):
-    w = strs[i].capitalize()
+    # w = strs[i].capitalize()
+    w = strs[i].title()
     res.append(w)
-print(res)
+print(" ".join(res))
+exit(0)
 
 # w = sorted(strs.upper(), key=lambda i: i[0])
 # 10.

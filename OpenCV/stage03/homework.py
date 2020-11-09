@@ -25,7 +25,7 @@ beta = scale * np.cos(a)
 M0 = np.float32([[1, 0, 0],
                  [0, 1, 0]])
 M1 = np.float32([[alpha, beta, (1 - alpha) * center_x - beta * center_y],
-                 [-beta, alpha, beta * center_x + (1 - alpha) * center_x]])
+                 [-beta, alpha, beta * center_x + (1 - alpha) * center_y]])
 print((1 - alpha) * center_x - beta * center_y)
 print(-center_x - cols)
 M2 = cv2.getRotationMatrix2D((center_x, center_y), 45, scale=scale)
