@@ -18,7 +18,7 @@ print(rows, cols)
 """
 center_x = rows // 2
 center_y = cols // 2
-scale = 0.8
+scale = 0.7
 a = np.pi / 4
 alpha = scale * np.sin(a)
 beta = scale * np.cos(a)

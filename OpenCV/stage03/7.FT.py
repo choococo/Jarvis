@@ -102,10 +102,10 @@ magnitude_spectrum = np.log(cv2.magnitude(fftshift[:, :, 0], fftshift[..., 1]))
 
 # 3. 滤波操作之高通滤波(去除低频，保留高频，相当于保留有梯度的地方，保留轮廓信息)
 # Opencv中的dft与前面不同的就是双通道的
-# mask = np.zeros((rows, cols, 2), dtype=np.uint8)
-# mask[rows // 2 - 30:rows // 2 + 30, cols // 2 - 30:cols // 2 + 30] = 1
-fftshift[rows // 2 - 30:rows // 2 + 30, cols // 2 - 30:cols // 2 + 30] = 0
-# fftshift = fftshift * mask
+mask = np.zeros((rows, cols, 2), dtype=np.uint8)
+mask[rows // 2 - 30:rows // 2 + 30, cols // 2 - 30:cols // 2 + 30] = 1
+# fftshift[rows // 2 - 30:rows // 2 + 30, cols // 2 - 30:cols // 2 + 30] = 0
+fftshift = fftshift * mask
 
 # 4. 去中心化：将低频和高频位置还原
 ifftshift = np.fft.ifftshift(fftshift)
