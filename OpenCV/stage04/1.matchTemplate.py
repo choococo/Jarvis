@@ -30,8 +30,14 @@ h, w, c = template.shape
 print(h, w, c)
 
 # 1). 匹配模板，得到匹配灰度图(这里会自动将图片转为灰度图)
-res = cv2.matchTemplate(image=img, templ=template, method=cv2.TM_CCOEFF)  # 归一化相关匹配法
-cv2.imshow("res", res) # 这里是模板灰度图, 比较抽象
+# res = cv2.matchTemplate(image=img, templ=template, method=cv2.TM_CCOEFF)  # 归一化相关匹配法
+# res = cv2.matchTemplate(image=img, templ=template, method=cv2.TM_CCORR_NORMED)  # 归一化[-1, 1], 1表示100%匹配
+# res = cv2.matchTemplate(image=img, templ=template, method=cv2.TM_CCORR)  # 效果不好
+res = cv2.matchTemplate(image=img, templ=template, method=cv2.TM_CCORR_NORMED)  # 归一化区域[0,1]一般使用这个就行
+# res = cv2.matchTemplate(image=img, templ=template, method=cv2.TM_SQDIFF)  # 效果不好，最小值是最匹配 区域
+# res = cv2.matchTemplate(image=img, templ=template, method=cv2.TM_SQDIFF_NORMED)  # 效果不好
+
+cv2.imshow("res", res)  # 这里是模板灰度图, 比较抽象
 print(res.shape)
 
 # 2).获取最小和最大像素及它们的位置(坐标)
@@ -42,7 +48,8 @@ print(min_val, max_val, min_loc, max_loc)  # -9535398.0 18226688.0 (102, 212) (2
 # 匹配类型是TM_CCOEFF、TM_CCOEFF_NORMED、TM_CCORR、TM_CCORR_NORMED时，最大值是最匹配区域
 # 匹配类型是TM_SQDIFF、TM_SQDIFF_NORMED时，最小值是最匹配区域
 cv2.rectangle(img, (max_loc[0], max_loc[1]), (max_loc[0] + w, max_loc[1] + h), (0, 0, 255), thickness=2)
-
+# 匹配类型是TM_SQDIFF、TM_SQDIFF_NORMED时，最小值是最匹配区域
+# cv2.rectangle(img, (min_loc[0], min_loc[1]), (min_loc[0] + w, min_loc[1] + h), color=(0, 0, 255), thickness=2)
 cv2.imshow("img", img)
 
 # 2. 多对象匹配：原图中有多个与模板匹配
