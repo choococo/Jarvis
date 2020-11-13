@@ -1,9 +1,9 @@
 import cv2
 
 
-# path = r"D:\test01.mp4"
-# cap = cv2.VideoCapture(path)
-cap = cv2.VideoCapture("http://ivi.bupt.edu.cn/hls/cctv1.m3u8")
+path = r"D:\test01.mp4"
+cap = cv2.VideoCapture(path)
+# cap = cv2.VideoCapture("http://ivi.bupt.edu.cn/hls/cctv1.m3u8")
 fps = cap.get(cv2.CAP_PROP_FPS)
 print(fps)
 
