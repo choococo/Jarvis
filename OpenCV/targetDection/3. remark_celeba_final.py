@@ -5,7 +5,7 @@ import time
 
 """
 @Auth : choococo lzy
-重新标注CelebA数据集，利用opencv的xml
+重新标注CelebA数据集，利用opencv的xml 自动化重标注——perfect
 """
 
 
@@ -44,6 +44,11 @@ class RemarkCelebA:
         with open(old_label_txt, 'r') as f:
             return [line.strip("\n") for line in f.readlines()][0]
 
+    def _length_new_label_txt(self):
+        with open(self._new_label_txt) as f:
+            length = len(f.readlines())
+        return length
+
     def _show_img(self, faces, image, index, isShow=False):
         """
         显示图片
@@ -56,6 +61,7 @@ class RemarkCelebA:
         if isShow == True:
             for (x, y, w, h) in faces:
                 cv2.rectangle(image, (x, y), (x + w, y + h + 10), (255, 0, 0), 2)
+
                 cv2.imshow(f"{index}", image)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
@@ -69,11 +75,14 @@ class RemarkCelebA:
         :param isShow: 是否显示图片
         :return: 进度条
         """
+        before_len = self._length_new_label_txt()
         face_cascade = cv2.CascadeClassifier(self._face_xml_path)
-        with open(self._new_label_txt, "w") as f:
+        with open(self._new_label_txt, "a+") as f:
             length = self._length_old_label_txt(self._old_label_txt)
             # 遍历图片
             for i, img_name in enumerate(os.listdir(self._image_dir)):
+                if i < before_len:
+                    continue
                 # 打开图片
                 image = cv2.imread(os.path.join(self._image_dir, img_name))
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -109,6 +118,9 @@ if __name__ == '__main__':
     old_label_txt = r"./label/list_bbox_celeba.txt"  # 旧的框标签txt文件
     new_label_txt = r"./label/list_new_bbox.txt"  # 重新生成的框的标签txt文件
     image_dir = r"./images"  # 需要重新标注的图片的路径
+    # image_dir = r"F:\BaiduNetdiskDownload\img_celeba.7z\img_celeba"  # 需要重新标注的图片的路径
     remark_celeba = RemarkCelebA(old_label_txt, new_label_txt, image_dir, face_xml_path)
-    remark_celeba.celeba_remark(interval=1, isShow=False)
+    remark_celeba.celeba_remark(interval=2, isShow=False)
     print(time.time() - t1)
+
+    # 【注意】每一次中断后，（1）手动添加一行空的CRLF
