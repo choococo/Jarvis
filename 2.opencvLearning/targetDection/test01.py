@@ -13,7 +13,8 @@ tf = transforms.Compose([
     transforms.ToTensor(),
 ])
 
-im = Image.open("../images/1.jpg")
+im = Image.open("../images/01.jpg")
+
 # im = im.resize((300, 400))
 imDraw = ImageDraw.Draw(im)
 x = tf(im)
@@ -26,6 +27,7 @@ scores = predictions[0]['scores']
 for box, label, score in zip(boxes, labels, scores):
     print(box)
     _box = box.cpu().detach().numpy()
+    print(_box)
     _label = label.cpu().detach().numpy()
     _score = score.cpu().detach().numpy()
     if _label == 1 and _score > 0.5:
