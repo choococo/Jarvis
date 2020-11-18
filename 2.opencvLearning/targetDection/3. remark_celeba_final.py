@@ -95,6 +95,7 @@ class RemarkCelebA:
                     strs = " ".join([img_name, x, y, w, h])
                     f.writelines(strs)
                     f.write("\n")
+                    f.flush()
                 elif len(faces) == 0:
                     # 读取旧的当前图片的标签
                     filename, x, y, w, h = self._read_old_label_txt(self._old_label_txt, i)
@@ -102,6 +103,7 @@ class RemarkCelebA:
                     strs = " ".join([filename, x, y, w, h])
                     f.writelines(strs)
                     f.write("\n")
+                    f.flush()
                 # 隔n张图片显示一次
                 if i % interval == 0:
                     self._show_img(faces, image, i, isShow=isShow)
@@ -117,8 +119,8 @@ if __name__ == '__main__':
     face_xml_path = r"./haarcascades/haarcascade_frontalface_alt.xml"  # 人脸检测
     old_label_txt = r"./label/list_bbox_celeba.txt"  # 旧的框标签txt文件
     new_label_txt = r"./label/list_new_bbox.txt"  # 重新生成的框的标签txt文件
-    image_dir = r"./images"  # 需要重新标注的图片的路径
-    # image_dir = r"F:\BaiduNetdiskDownload\img_celeba.7z\img_celeba"  # 需要重新标注的图片的路径
+    # image_dir = r"./images"  # 需要重新标注的图片的路径
+    image_dir = r"F:\BaiduNetdiskDownload\img_celeba\img_celeba"  # 需要重新标注的图片的路径
     remark_celeba = RemarkCelebA(old_label_txt, new_label_txt, image_dir, face_xml_path)
     remark_celeba.celeba_remark(interval=2, isShow=False)
     print(time.time() - t1)
