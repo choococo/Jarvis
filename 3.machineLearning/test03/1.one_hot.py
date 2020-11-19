@@ -12,6 +12,7 @@ import torch
 # data = [np.argmax(one_hot) for one_hot in one_hots]
 # print(data)
 
+from torch.nn.functional import one_hot
 'pytorch创造one_hot'
 num_classes = 10
 y = torch.tensor([1, 3, 4, 5])

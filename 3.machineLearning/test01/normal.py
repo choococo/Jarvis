@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 def Normalization0(x):
     """
-    归一化(0~1) x = (x - x_min) / (x_max - x_min)
+    归一化(0~1) x = (x - x_min) / (x_max - x_min)    MinMaxScaler
     :param x: 是一组数据
     :return: 归一化后的一组数据
     """
@@ -13,7 +13,7 @@ def Normalization0(x):
 
 def Normalization1(x):
     """
-    最值归一化 (-1, 1)  x = (x - x_min) / (x_max -x_min)
+    最值归一化 (-1, 1)  x = x  / x_max(|x|),用于稀疏矩阵的 MaxAbsScaler
     :param x:
     :return:
     """
@@ -31,7 +31,7 @@ def Normalization2(x):
 
 def Normalization3(x):
     """
-    标准化（μ=0，σ=1） x =(x−μ)/σ
+    标准化（μ=0，σ=1） x =(x−μ)/σ 使均值为0，方差为1
     :param x:
     :return:
     """
@@ -39,7 +39,7 @@ def Normalization3(x):
     s2 = np.mean([(i - x_mean) ** 2 for i in x])  # 方差
     std = np.sqrt(s2)  # 标准差
 
-    return [(i - x_mean) / (s2 + 1e-10) for i in x]  # 减均值，除以方差
+    return [(i - x_mean) / (std + 1e-10) for i in x]  # 减均值，除以方差
 
 
 def Normalization4(x):
@@ -53,7 +53,7 @@ def Normalization4(x):
 
 
 s = [21312313, 0, 76, 223, 12, -1341656]
-l = [3, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11,
+l = [-10, 3, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11,
      12, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 15, 15, 30]
 cs = []
 for i in l:
@@ -67,10 +67,13 @@ n2 = Normalization2(l)
 n3 = Normalization3(l)
 n4 = Normalization4(l)
 
-# print(n0)
-# print(n1)
+print(" 0-1 ", n0)
+print(n1)
 print(n2)
-# print(n3)
+print(n3)
+print(n4)
+print(np.var(n3))
+print(np.std(n3))
 # plt.plot(l,cs)
 # plt.plot(n0, cs, c="r")
 # plt.plot(n1, cs, c="blue")

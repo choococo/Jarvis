@@ -8,6 +8,10 @@ from sklearn.model_selection import GridSearchCV
 核岭回归：就是加入了核函数(就是激活函数)，提供非线性能力
     下面使用到的ravel()的作用
 """
+# 屏蔽警告
+import warnings
+warnings.filterwarnings("ignore")
+
 rng = np.random.RandomState(0)
 print(rng) # RandomState(MT19937)
 # 核岭回归
