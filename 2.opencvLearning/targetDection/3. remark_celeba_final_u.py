@@ -75,14 +75,16 @@ class RemarkCelebA:
         :param isShow: 是否显示图片
         :return: 进度条
         """
-        before_len = self._length_new_label_txt()
+        # before_len = self._length_new_label_txt()
+        before_len = 0
         face_cascade = cv2.CascadeClassifier(self._face_xml_path)
+        # length = self._length_old_label_txt(self._old_label_txt)
+        length = 46
         with open(self._new_label_txt, "a+") as f:
-            length = self._length_old_label_txt(self._old_label_txt)
             # 遍历图片
             for i, img_name in enumerate(os.listdir(self._image_dir)):
-                if i < before_len:
-                    continue
+                # if i < before_len:
+                #     continue
                 # 打开图片
                 image = cv2.imread(os.path.join(self._image_dir, img_name))
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -92,21 +94,22 @@ class RemarkCelebA:
                     x, y, w, h = faces[0]
                     x, y, w, h = str(x), str(y), str(w), str(h)
                     # 将img_name x y w h 按照空格的方式写入新的标签文本
-                    strs = " ".join([img_name, x, y, w, h])
-                    f.writelines(strs)
+                    f.write("{} {} {} {} {}".format(img_name, x, y, w, h))
+                    # strs = " ".join([img_name, x, y, w, h])
+                    # f.writelines(strs)
                     f.write("\n")
                     f.flush()
-                elif len(faces) == 0:
-                    # 读取旧的当前图片的标签
-                    filename, x, y, w, h = self._read_old_label_txt(self._old_label_txt, i)
-                    # 写入到文件中
-                    strs = " ".join([filename, x, y, w, h])
-                    f.writelines(strs)
-                    f.write("\n")
-                    f.flush()
+                # elif len(faces) == 0:
+                #     # 读取旧的当前图片的标签
+                #     filename, x, y, w, h = self._read_old_label_txt(self._old_label_txt, i)
+                #     # 写入到文件中
+                #     strs = " ".join([filename, x, y, w, h])
+                #     f.writelines(strs)
+                #     f.write("\n")
+                #     f.flush()
                 # 隔n张图片显示一次
-                if i % interval == 0:
-                    self._show_img(faces, image, i, isShow=isShow)
+                # if i % interval == 0:
+                #     self._show_img(faces, image, i, isShow=isShow)
                 sys.stdout.write("\r >> processing {}/{}".format((i + 1), length))
                 sys.stdout.flush()
             sys.stdout.write("\n")

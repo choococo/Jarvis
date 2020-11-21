@@ -1,14 +1,17 @@
 import cv2
 import os
 import sys
+import time
 
 """
 重新标注CelebA数据集，利用opencv的xml
 """
 old_label_txt = r"./label/list_bbox_celeba.txt"
-new_label_txt = r"./label/list_new_bbox.txt"
+new_label_txt = r"./label/list_new_bbox1.txt"
 image_dir = r"./images"
 
+t = time.time()
+print(t)
 
 def read_old_label_txt(old_label_txt, index):
     """
@@ -21,7 +24,6 @@ def read_old_label_txt(old_label_txt, index):
         labels = [line.strip("\n") for line in f.readlines()][2:]
         data = labels[index]
         filename, x, y, w, h = data.split()
-        # print(filename, x, y, w, h)
         return data.split()
 
 
@@ -40,7 +42,7 @@ with open(new_label_txt, "w") as f:
     # 遍历图片
     for i, img_name in enumerate(os.listdir(image_dir)):
         # print(i)
-        # filename, x, y, w, h = read_old_label_txt(old_label_txt, i)
+        filename, x, y, w, h = read_old_label_txt(old_label_txt, i)
         # print(img_name)
         # 打开图片
         image = cv2.imread(os.path.join(image_dir, img_name))
@@ -53,7 +55,7 @@ with open(new_label_txt, "w") as f:
             x, y, w, h = faces[0]
             x, y, w, h = str(x), str(y), str(w), str(h)
             # 将img_name x y w h 按照空格的方式写入新的标签文本
-            strs = [img_name, x, y, w, h]
+            strs = [filename, x, y, w, h]
             strs = " ".join(strs)
             f.writelines(strs)
             f.write("\n")
@@ -66,17 +68,22 @@ with open(new_label_txt, "w") as f:
             f.writelines(strs)
             f.write("\n")
         # 隔一段时间显示一次
-        # if i % 1 == 0:
-        #     for (x, y, w, h) in faces:
-        #         cv2.rectangle(image, (x, y), (x + w, y + h + 10), (255, 0, 0), 2)
-        #         # roi_face = gray[y:y + h, x:x + w]
-        #         # roi_color = image[y:y + h, x:x + w]
-        #         cv2.imshow("image", image)
-        #     cv2.waitKey(0)
-        #     cv2.destroyAllWindows()
+        if i % 1 == 0:
+            for (x, y, w, h) in faces:
+                cv2.rectangle(image, (x, y), (x + w, y + h + 10), (255, 0, 0), 2)
+                # roi_face = gray[y:y + h, x:x + w]
+                # roi_color = image[y:y + h, x:x + w]
+                cv2.imshow("image", image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
         sys.stdout.write("\r >> processing {}/{}".format((i + 1), length))
         sys.stdout.flush()
     sys.stdout.write("\n")
     sys.stdout.flush()
     sys.stdout.write("标签重生成完成！")
     # break
+
+    a = exit(-1)
+    print(getattr(a))
+    if exit() == -1:
+        print(time.time() - t)
