@@ -8,7 +8,7 @@ image1 = cv2.imread("../images/1.jpg")
 image2 = cv2.imread("../images/7.jpg")
 
 # 形状要一样
-image_or = cv2.bitwise_or(image1, image2)           # 进行或运算，求并集，加法
+image_or = cv2.bitwise_or(image1, image2)           # 进行或运算，求并集，加法可以进行数据融合，比较好用
 print(image_or.shape)
 
 image3 = np.uint8((image1 * 0.7 + image2 * 0.3))    # 这两张图片进行了融合，但是颜色的色差不是两张原图的内容
@@ -26,11 +26,12 @@ image_xor = cv2.bitwise_xor(image1, image2)         # 异或，相同为0，不�
 print(image_xor[0, 0 , 0])
 
 
-# cv2.imshow("", image1)
-# cv2.imshow("", image_or)
-# cv2.imshow("", image_and)
+cv2.imshow("image1", image1)
+cv2.imshow("image_or", image_or)
+cv2.imshow("image_and", image_and)
 # cv2.imshow("", image_not)
 cv2.imshow("", image_xor)
+cv2.imshow("image3", image3)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
