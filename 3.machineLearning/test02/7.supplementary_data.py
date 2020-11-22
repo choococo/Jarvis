@@ -4,7 +4,7 @@ import numpy as np
 
 # preprocessing:["mean", "median", "most_frequent", "constant"]
 # imp = preprocessing.Imputer(missing_values='NaN', strategy='mean')
-# 图像补全
+# 数据补全
 imp = SimpleImputer(missing_values=np.nan, strategy='mean')
 y_imp = imp.fit_transform([[np.nan, 2], [6, np.nan], [7, 6]])
 
