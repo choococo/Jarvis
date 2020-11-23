@@ -18,7 +18,7 @@ scaler = preprocessing.StandardScaler().fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
-# 创建模型, 决策分类树
+# 创建模型,
 clf = tree.DecisionTreeClassifier(max_depth=5)
 
 # 模型拟合
