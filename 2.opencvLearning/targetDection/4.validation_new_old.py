@@ -41,7 +41,7 @@ if __name__ == '__main__':
         box1 = [old[i][0],x1,y1,w1,h1]
         box2 = [new[i][0],x2, y2, w2, h2]
         num = iou(box1,box2)
-        if  num < 0.6 :
+        if  num < 0.2 :
             j += 1
             # print(old[i].split()[0])
             print(i+1,end=" ")
