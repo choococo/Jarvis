@@ -1,14 +1,10 @@
-import torch
-import torch.nn as nn
-from torch.utils.data import DataLoader
+from pycocotools import coco
+
+print(coco)
+
+data = coco.COCO()
+print(data)
 
 
-class Net(nn.Module):
-
-    def __init__(self):
-        super(Net, self).__init__()
-
-    def forward(self, x):
-        return x
 
 
