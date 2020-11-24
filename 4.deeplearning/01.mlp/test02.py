@@ -33,6 +33,8 @@ for dataset in [train_dataset]:
     for i, (image, label) in enumerate(dataset):
         _dict[label] += 1
         img = transforms.ToPILImage()(image)
+        # plt.imshow(img, cmap="gray")
+        # plt.savefig(f"{train_path}/{label}/{_dict[label]}.png")
         img.save(f"{train_path}/{label}/{_dict[label]}.png")
     print(sum(_dict.values()))
 
