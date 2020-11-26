@@ -5,7 +5,7 @@ import os
 import torch.nn as nn
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score
 
 
 class Net(nn.Module):  # 定义网络模型
@@ -89,7 +89,13 @@ def train(net, train_loader, device, loss_func, optimizer, save_params, BATCH_SI
             idx = torch.argmax(out, dim=1)
             accuracy = (torch.sum(torch.eq(idx, y)) / BATCH_SIZE).item()
             # accuracy = torch.mean(idx == y) # mean通常用与对多个精度或损失求平均值
-
+            y = y.detach().cpu().numpy()
+            idx = idx.detach().cpu().numpy()
+            # print(accuracy_score(y, idx))
+            # print(precision_score(y, idx, average="macro"))
+            # print(precision_score(y, idx, average="micro"))
+            # print(precision_score(y, idx, average="weighted"))
+            # exit(0)
             if before_loss < loss:
                 torch.save(net.state_dict(), save_params)
             else:
@@ -140,7 +146,7 @@ if __name__ == '__main__':
     print(len(train_loader))
     print(len(test_loader))
 
-    isTrain = False
+    isTrain = True
 
     if isTrain:
         train(net, train_loader, device, loss_func, optimizer, save_params, BATCH_SIZE)
